@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Input Form with Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .delete-btn {
+            color: white;
+            background-color: #d9534f;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .delete-btn:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>User Input Form</h2>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="number" id="id" placeholder="Enter your ID">
+    </div>
+    <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" placeholder="Enter your city">
+    </div>
+    <button onclick="addData()">Submit</button>
+</div>
+
+<table id="data-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>City</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be dynamically added here -->
+    </tbody>
+</table>
+
+<script>
+    function addData() {
+        const name = document.getElementById('name').value;
+        const id = document.getElementById('id').value;
+        const city = document.getElementById('city').value;
+
+        if (name === '' || id === '' || city === '') {
+            alert("Please fill all the fields!");
+            return;
+        }
+
+        const tableBody = document.querySelector('#data-table tbody');
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${name}</td>
+            <td>${id}</td>
+            <td>${city}</td>
+            <td>
+                <input type="checkbox" onclick="deleteRow(this)">
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+
+        // Clear form fields
+        document.getElementById('name').value = '';
+        document.getElementById('id').value = '';
+        document.getElementById('city').value = '';
+    }
+
+    function deleteRow(checkbox) {
+        if (checkbox.checked) {
+            const row = checkbox.closest('tr');
+            row.remove();
+        }
+    }
+</script>
+
+</body>
+</html>
